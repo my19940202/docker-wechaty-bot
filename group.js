@@ -22,12 +22,20 @@ function onLogin (user) {
 
 function onLogout (user) {
     log.info('StarterBot', '%s logout', user)
-}
+}   
+const statMap = {
+    room: 0,
+    say: 0,
+    msg: 0
+};
 
 async function onMessage (msg) {
     log.info('StarterBot', msg.toString());
+    if (msg.text()) {
+        statMap.msg = statMap.msg + 1;
+    }
     if (msg.text() === 'ding') {
-        await msg.say('dong')
+        await msg.say(`已收到消息${statMap.msg}条，回复${statMap.say}次,`)
     }
     const contact = msg.talker();
     const text = msg.text();
@@ -39,13 +47,15 @@ async function onMessage (msg) {
             const new_name = text.split('修改群名称')[0];
             await room.topic(new_name);
         }
-        if (text.includes('小度')) {
-            const real_content = text.split('小度')[1];
-            const {result} = await baiduBot(real_content);
-            await msg.say(result);
-        }
     } else {
         console.log(`Contact: ${contact.name()} Text: ${text}`);
+    }
+    // 群和私聊消息都支持回复
+    if (text.includes('小度')) {
+        const real_content = text.split('小度')[1];
+        const {result} = await baiduBot(real_content);
+        statMap.say = statMap.say + 1;
+        await msg.say(result);
     }
 }
 
