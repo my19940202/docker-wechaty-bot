@@ -40,6 +40,7 @@ async function onMessage (msg) {
     const contact = msg.talker();
     const text = msg.text();
     const room = msg.room();
+
     if (room) {
         const topic = await room.topic();
         console.log(`Room: ${topic} Contact: ${contact.name()} Text: ${text}`)
@@ -47,13 +48,15 @@ async function onMessage (msg) {
             const new_name = text.split('修改群名称')[0];
             await room.topic(new_name);
         }
+        // 群聊@才回复消息
+        if (await msg.mentionSelf()) {
+            const {result} = await baiduBot(text);
+            statMap.say = statMap.say + 1;
+            await msg.say(result);
+        }
     } else {
         console.log(`Contact: ${contact.name()} Text: ${text}`);
-    }
-    // 群和私聊消息都支持回复
-    if (text.includes('小度')) {
-        const real_content = text.split('小度')[1];
-        const {result} = await baiduBot(real_content);
+        const {result} = await baiduBot(text);
         statMap.say = statMap.say + 1;
         await msg.say(result);
     }
