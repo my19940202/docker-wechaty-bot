@@ -28,8 +28,6 @@ export async function baiduBot(content) {
                 resolve('不好意思,我不知道');
             }
             else {
-                console.log('response', response);
-                
                 resolve(JSON.parse(response.body));
             }
         })
