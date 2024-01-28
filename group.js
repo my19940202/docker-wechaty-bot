@@ -1,6 +1,6 @@
 /**
-测试如何跑通群消息监听 和发送
- */
+    支持响应群消息，群消息监听，当群消息中包含“小度”时，自动调用百度AI接口
+*/
 import 'dotenv/config.js'
 import http from 'http'
 import {WechatyBuilder, ScanStatus, log} from 'wechaty';
@@ -25,13 +25,13 @@ function onLogout (user) {
 }
 
 async function onMessage (msg) {
-    log.info('StarterBot', msg.toString())
+    log.info('StarterBot', msg.toString());
     if (msg.text() === 'ding') {
         await msg.say('dong')
     }
-    const contact = msg.talker()
-    const text = msg.text()
-    const room = msg.room()
+    const contact = msg.talker();
+    const text = msg.text();
+    const room = msg.room();
     if (room) {
         const topic = await room.topic();
         console.log(`Room: ${topic} Contact: ${contact.name()} Text: ${text}`)
