@@ -34,9 +34,6 @@ async function onMessage (msg) {
     if (msg.text()) {
         statMap.msg = statMap.msg + 1;
     }
-    if (msg.text() === 'ding') {
-        await msg.say(`已收到消息${statMap.msg}条，回复${statMap.say}次,`)
-    }
     const contact = msg.talker();
     const text = msg.text();
     const room = msg.room();
@@ -45,20 +42,27 @@ async function onMessage (msg) {
         const topic = await room.topic();
         console.log(`Room: ${topic} Contact: ${contact.name()} Text: ${text}`)
         if (text.includes('修改群名称')) {
-            const new_name = text.split('修改群名称')[0];
+            const new_name = text.split('修改群名称')[1];
             await room.topic(new_name);
         }
         // 群聊@才回复消息
         if (await msg.mentionSelf()) {
-            const {result} = await baiduBot(text);
+            const str = text.split('老司机')[1];
+            const {result} = await baiduBot(str);
             statMap.say = statMap.say + 1;
             await msg.say(result);
         }
     } else {
-        console.log(`Contact: ${contact.name()} Text: ${text}`);
-        const {result} = await baiduBot(text);
-        statMap.say = statMap.say + 1;
-        await msg.say(result);
+        // 单聊使用ding查看目前统计数据
+        if (msg.text() === 'ding') {
+            await msg.say(`已收到消息${statMap.msg}条，回复${statMap.say}次,`)
+        }
+        else {
+            console.log(`Contact: ${contact.name()} Text: ${text}`);
+            const {result} = await baiduBot(text);
+            statMap.say = statMap.say + 1;
+            await msg.say(result);
+        }
     }
 }
 
