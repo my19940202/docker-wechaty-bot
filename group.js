@@ -2,10 +2,11 @@
 测试如何跑通群消息监听 和发送
  */
 import 'dotenv/config.js'
-
+import http from 'http'
 import {WechatyBuilder, ScanStatus, log} from 'wechaty';
 import {baiduBot} from './baidu-bot.js';
 
+const port = process.env.PORT || 80;
 function onScan (qrcode, status) {
     if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
         const qrcodeImageUrl = ['https://wechaty.js.org/qrcode/', encodeURIComponent(qrcode)].join('');
@@ -39,7 +40,8 @@ async function onMessage (msg) {
             await room.topic(new_name);
         }
         if (text.includes('小度')) {
-            const {result} = await baiduBot(text);
+            const real_content = text.split('小度')[1];
+            const {result} = await baiduBot(real_content);
             await msg.say(result);
         }
     } else {
@@ -57,5 +59,19 @@ bot.on('logout',  onLogout)
 bot.on('message', onMessage)
 
 bot.start()
- .then(() => log.info('StarterBot', 'Starter Bot Started.'))
- .catch(e => log.error('StarterBot', e))
+    .then(() => log.info('StarterBot', 'Starter Bot Started.'))
+    .catch(e => log.error('StarterBot', e))
+
+
+// 创建服务器
+const server = http.createServer((req, res) => {  
+    // 设置响应头
+    res.setHeader('Content-Type', 'text/plain');  
+    // 发送响应内容
+    res.end('Hello, World!' + new Date());
+});
+
+// 监听端口
+server.listen(port, () => {
+    console.log('Server is running');
+});
