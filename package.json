@@ -1,0 +1,23 @@
+{
+  "name": "wxcloudrun-koa",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "微信云托管 koa 框架模板",
+  "main": "index.js",
+  "scripts": {
+    "start": "export WECHATY_TOKEN='puppet_padlocal_7b7b65df21654e12b22f819e96986114' && node busy.js",
+    "dd": "export WECHATY_TOKEN='puppet_padlocal_7b7b65df21654e12b22f819e96986114' && node dd.js",
+    "room_test": "export name=yilin WECHATY_TOKEN='puppet_padlocal_afb42e997653496da226c90f66d8ee96' && node group.js",
+    "room": "export name=xiaohao WECHATY_TOKEN='puppet_padlocal_b6f8c0635bc5434ebd0f55322b0b3e31' && node group.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "qrcode-terminal": "0.12.0",
+    "qrcode": "^1.5.1",
+    "uuid": "^9.0.0",
+    "wechaty": "^1.20.2",
+    "wechaty-puppet-wechat": "^1.18.4",
+    "request": "2.88.2"
+  }
+}

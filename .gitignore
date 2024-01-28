@@ -1,0 +1,6 @@
+.npm
+.pki
+.bash_history
+.viminfo
+*.dev
+node_modules
