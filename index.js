@@ -1,5 +1,5 @@
 /**
-    支持响应群消息，群消息监听，当群消息中包含“小度”时，自动调用百度AI接口
+    支持响应群消息，群消息监听
 */
 import 'dotenv/config.js'
 import http from 'http'
@@ -37,10 +37,11 @@ async function onMessage (msg) {
     const contact = msg.talker();
     const text = msg.text();
     const room = msg.room();
+    const name = contact.name();
 
     if (room) {
         const topic = await room.topic();
-        console.log(`Room: ${topic} Contact: ${contact.name()} Text: ${text}`)
+        console.log(`Room: ${topic} Contact: ${name} Text: ${text}`)
         if (text.includes('修改群名称')) {
             const new_name = text.split('修改群名称')[1];
             await room.topic(new_name);
@@ -57,8 +58,8 @@ async function onMessage (msg) {
         if (msg.text() === 'ding') {
             await msg.say(`已收到消息${statMap.msg}条，回复${statMap.say}次,`)
         }
-        else {
-            console.log(`Contact: ${contact.name()} Text: ${text}`);
+        // 不和微信官方账户互动
+        else if (!name.includes('微信')) {
             const {result} = await baiduBot(text);
             statMap.say = statMap.say + 1;
             await msg.say(result);
