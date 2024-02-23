@@ -27,7 +27,7 @@ export async function baiduBot(content) {
                 resolve('不好意思,我不知道');
             }
             else if (response.body && response.body.includes('文心一言')) {
-                resolve('我是刘师傅gpt助手，如果你有任何问题，请随时向我提问。');
+                resolve({result: '我是刘师傅gpt助手，如果你有任何问题，请随时向我提问。'});
             }
             else {
                 resolve(JSON.parse(response.body));

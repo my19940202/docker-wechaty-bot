@@ -57,7 +57,7 @@ async function onMessage (msg) {
     } else {
         // 单聊使用ding查看目前统计数据
         if (msg.text() === 'ding') {
-            await msg.say(`已收到消息${statMap.msg}条，回复${statMap.say}次,`)
+            await msg.say(`已收消息${statMap.msg}条，回复${statMap.say}次,`)
         }
         // 不和微信官方账户互动
         else if (!name.includes('微信')) {
