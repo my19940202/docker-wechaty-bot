@@ -59,6 +59,9 @@ async function onMessage (msg) {
         if (msg.text() === 'ding') {
             await msg.say(`已收消息${statMap.msg}条，回复${statMap.say}次,`)
         }
+        // else {
+        //     await msg.say(msg.text())
+        // }
         // 不和微信官方账户互动
         else if (!name.includes('微信')) {
             const {result} = await baiduBot(text);
