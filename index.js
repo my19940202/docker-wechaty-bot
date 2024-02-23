@@ -22,7 +22,8 @@ function onLogin (user) {
 
 function onLogout (user) {
     log.info('StarterBot', '%s logout', user)
-}   
+}
+
 const statMap = {
     room: 0,
     say: 0,

@@ -10,7 +10,6 @@ export async function baiduBot(content) {
         },
         body: JSON.stringify({
             messages: [
-                // TODO: 此处其实是有多轮对话的要求
                 {
                     role: "user",
                     content
@@ -26,6 +25,9 @@ export async function baiduBot(content) {
         request(options, (error, response) => {
             if (error) {
                 resolve('不好意思,我不知道');
+            }
+            else if (response.body && response.body.includes('文心一言')) {
+                resolve('我是刘师傅gpt助手，如果你有任何问题，请随时向我提问。');
             }
             else {
                 resolve(JSON.parse(response.body));
