@@ -49,8 +49,7 @@ async function onMessage (msg) {
         }
         // 群聊@才回复消息
         if (await msg.mentionSelf()) {
-            const str = text.split('老司机')[1];
-            const {result} = await baiduBot(str);
+            const {result} = await baiduBot(text);
             statMap.say = statMap.say + 1;
             await msg.say(result);
         }
