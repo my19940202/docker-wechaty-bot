@@ -8,7 +8,7 @@
     "start": "node busy.js",
     "dd": "node dd.js",
     "room_test": "node group.js",
-    "room": "node zhuangxiu.js"
+    "room": "node index.js"
   },
   "author": "",
   "license": "Apache-2.0",
