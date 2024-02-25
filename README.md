@@ -14,8 +14,8 @@
 不然会一直部署失败
 
 # 把当前目录映射到容器中(两部分代码会实时同步)
+```
 docker run -it -v /Users/xishengbo/Desktop/dev.tmp/git_repo/docker-wechaty:/bot  wechaty/wechaty sh
-
 ```
 
 ## 参考资料

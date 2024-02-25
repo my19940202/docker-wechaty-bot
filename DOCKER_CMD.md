@@ -43,8 +43,3 @@ pull现有镜像，run起来看下能不能正常启动，缺少什么原来就�
 docker run -it -v /Users/xishengbo/Desktop/dev.tmp/git_repo/docker-wechaty:/bot  wechaty/wechaty sh
 
 ```
-
-## 参考资料
-1. 云官方官方的模板 https://github.com/WeixinCloud/wxcloudrun-koa
-2. 使用nodejs19 docker部署的wechaty https://github.com/fuergaosi233/wechat-chatgpt/blob/main/Dockerfile
-3. wechaty官方文档 https://wechaty.gitbook.io/wechaty/v/zh/quick-start
