@@ -8,4 +8,4 @@ ENV PUPPETEER_SKIP_DOWNLOAD="true"
 
 RUN npm install
 COPY . .
-CMD ["npm", "run", "room"]
+CMD ["npm", "run", "start"]

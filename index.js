@@ -4,7 +4,7 @@
 import 'dotenv/config.js';
 import http from 'http';
 import {WechatyBuilder, log} from 'wechaty';
-import {onScan, onLogin, onLogout, onMessage} from './util';
+import {onScan, onLogin, onLogout, onMessage} from './util/index.js';
 
 // 微信机器人 事件监听
 const bot = WechatyBuilder.build({name: 'group-test-bot'});
