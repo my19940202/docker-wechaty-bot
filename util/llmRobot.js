@@ -4,13 +4,13 @@ import {safeParseJSON} from './safeParseJSON.js';
 // token存储到env中，避免暴露
 const env = process.env;
 
-export async function baiduBot(content, robotType) {
+export async function baiduBot(content, robotType, systemFromChat) {
     if (content) {
         const access_token = await getAccessToken(robotType);
         const PLUGIN_TYPE = ['LinGaoQiMing', 'NotOnlyMoney'];
         const bodyObj = PLUGIN_TYPE.includes(robotType)
             ? {
-                query: content,
+                query: content.trim(),
                 plugins: ['uuid-zhishiku'],
                 verbose: true,
                 llm: {
@@ -24,10 +24,11 @@ export async function baiduBot(content, robotType) {
             }
             : {
                 messages: [{role: 'user', content}],
-                system: systemMap[robotType] || undefined,
+                system: systemFromChat || systemMap[robotType] || undefined,
                 disable_search: false,
                 enable_citation: false
             };
+
         const options = {
             method: 'POST',
             url: (PLUGIN_API[robotType] || DEF_MODEL_API) + access_token,
@@ -72,15 +73,19 @@ function getAccessToken(type = 'LiuShifu') {
         LinGaoQiMing: ['LINGAO_AK', 'LINGAO_SK'],
         NotOnlyMoney: ['MONEY_AK', 'MONEY_SK']
     };
+
+    const AK_SK = tokenMap[type] || tokenMap.LiuShifu;
     const options = {
         method: 'POST',
         url: [
             'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=',
-            env[tokenMap[type][0]],
+            env[AK_SK[0]],
             '&client_secret=',
-            env[tokenMap[type][1]]
+            env[AK_SK[1]]
         ].join('')
-    }
+    };
+    
+
     return new Promise((resolve, reject) => {
         request(options, (error, response) => {
             if (error) { reject(error) }
