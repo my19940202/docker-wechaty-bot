@@ -59,9 +59,13 @@ export async function onMessage (msg) {
             }
             else if (zhuangxiuPattern.some(item => topic.includes(item))) {
                 let {result} = await baiduBot(text, 'LiuShifu');
-                result = result.replace(/百度/g, '刘师傅');
-                statMap.say = statMap.say + 1;
-                await msg.say(result);
+                if (result) {
+                    if (result && result.includes('百度')) {
+                        result = result.replace(/百度/g, '刘师傅');
+                    }
+                    statMap.say = statMap.say + 1;
+                    await msg.say(result);
+                }
             }
             else if (sdhpPattern.some(item => topic.includes(item))) {
                 const {result} = await baiduBot(text, 'NotOnlyMoney');

@@ -37,10 +37,12 @@ export async function baiduBot(content, robotType, systemFromChat) {
             },
             body: JSON.stringify(bodyObj)
         };
+        // console.log('optionsoptions', options.body);
 
         return new Promise((resolve, reject) => {
             try {
                 request(options, (error, response) => {
+                    // console.log('request', error, response);
                     if (error) {
                         reject({result: '业务繁忙，稍后回复'});
                     }
