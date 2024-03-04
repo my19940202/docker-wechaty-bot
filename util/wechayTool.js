@@ -58,7 +58,7 @@ export async function onMessage (msg) {
                 await msg.say(result);
             }
             else if (zhuangxiuPattern.some(item => topic.includes(item))) {
-                const {result} = await baiduBot(text, 'LiuShifu');
+                let {result} = await baiduBot(text, 'LiuShifu');
                 result = result.replace(/百度/g, '刘师傅');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
