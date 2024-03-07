@@ -4,7 +4,7 @@
 import 'dotenv/config.js';
 import http from 'http';
 import {WechatyBuilder, log} from 'wechaty';
-import {onScan, onLogin, onLogout, onMessage} from './util/index.js';
+import {onScan, onLogin, onLogout, onMessage, onFriendship} from './util/index.js';
 
 // 微信机器人 事件监听
 const bot = WechatyBuilder.build({name: 'group-test-bot'});
@@ -12,6 +12,7 @@ bot.on('scan',    onScan)
 bot.on('login',   onLogin)
 bot.on('logout',  onLogout)
 bot.on('message', onMessage)
+bot.on('friendship', onFriendship)
 bot.start()
     .then(() => log.info('StarterBot', 'Starter Bot Started.'))
     .catch(e => log.error('StarterBot', e))

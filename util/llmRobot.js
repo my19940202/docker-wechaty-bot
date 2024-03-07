@@ -17,9 +17,9 @@ export async function baiduBot(content, robotType, systemFromChat) {
                     // 其中较小的值会使生成的文本更加保守和确定性，而较大的值则会使文本更加多样化和随机。
                     temperature: 0.7,
                     // 影响输出文本的多样性，取值越大，生成文本的多样性越强
-                    top_p: 0.7,
+                    top_p: 0.8,
                     // 最大输出长度
-                    max_output_tokens: 500
+                    max_output_tokens: 400
                 }
             }
             : {
@@ -38,11 +38,10 @@ export async function baiduBot(content, robotType, systemFromChat) {
             body: JSON.stringify(bodyObj)
         };
         // console.log('optionsoptions', options.body);
-
         return new Promise((resolve, reject) => {
             try {
                 request(options, (error, response) => {
-                    // console.log('request', error, response);
+                    // console.log('request', response.body);
                     if (error) {
                         reject({result: '业务繁忙，稍后回复'});
                     }
