@@ -65,6 +65,7 @@ export async function onMessage (msg) {
             const zhuangxiuPattern = ['刘师傅', '作业', '装修', '局改'];
             const sdhpPattern = ['不止金钱', '声动'];
             const bankPattern = ['中国银行'];
+            const daGongRenPattern = ['包邮区', '互联网', '学习'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');
@@ -90,6 +91,11 @@ export async function onMessage (msg) {
                     statMap.say = statMap.say + 1;
                     await msg.say(result);
                 }
+            }
+            else if (daGongRenPattern.some(item => topic.includes(item))) {
+                const {result} = await baiduBot(text, 'DaGongRen');
+                statMap.say = statMap.say + 1;
+                await msg.say(result);
             }
             else if (sdhpPattern.some(item => topic.includes(item))) {
                 const {result} = await baiduBot(text, 'NotOnlyMoney');

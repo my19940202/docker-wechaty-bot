@@ -7,20 +7,13 @@ const env = process.env;
 export async function baiduBot(content, robotType, systemFromChat) {
     if (content) {
         const access_token = await getAccessToken(robotType);
-        const PLUGIN_TYPE = ['LinGaoQiMing', 'NotOnlyMoney'];
+        const PLUGIN_TYPE = ['LinGaoQiMing', 'NotOnlyMoney', 'DaGongRen'];
         const bodyObj = PLUGIN_TYPE.includes(robotType)
             ? {
                 query: content.trim(),
-                plugins: ['uuid-zhishiku'],
+                plugins: robotType !== 'DaGongRen' ? ['uuid-zhishiku'] : undefined,
                 verbose: true,
-                llm: {
-                    // 其中较小的值会使生成的文本更加保守和确定性，而较大的值则会使文本更加多样化和随机。
-                    temperature: 0.7,
-                    // 影响输出文本的多样性，取值越大，生成文本的多样性越强
-                    top_p: 0.8,
-                    // 最大输出长度
-                    max_output_tokens: 400
-                }
+                llm: robotType === 'LinGaoQiMing' ? {max_output_tokens: 400} : undefined
             }
             : {
                 messages: [{role: 'user', content}],
@@ -37,11 +30,11 @@ export async function baiduBot(content, robotType, systemFromChat) {
             },
             body: JSON.stringify(bodyObj)
         };
-        // console.log('optionsoptions', options.body);
+        console.log('optionsoptions', options.body);
         return new Promise((resolve, reject) => {
             try {
                 request(options, (error, response) => {
-                    // console.log('request', response.body);
+                    console.log('request', response.body);
                     if (error) {
                         reject({result: '业务繁忙，稍后回复'});
                     }
@@ -72,7 +65,8 @@ function getAccessToken(type = 'LiuShifu') {
     const tokenMap = {
         LiuShifu: ['DEF_AK', 'DEF_SK'],
         LinGaoQiMing: ['LINGAO_AK', 'LINGAO_SK'],
-        NotOnlyMoney: ['MONEY_AK', 'MONEY_SK']
+        NotOnlyMoney: ['MONEY_AK', 'MONEY_SK'],
+        DaGongRen: ['DGR_AK', 'DGR_SK']
     };
 
     const AK_SK = tokenMap[type] || tokenMap.LiuShifu;

@@ -3,8 +3,9 @@ export const DEF_MODEL_API = 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenx
 
 // 插件地址-带了知识库私域文本
 export const PLUGIN_API = {
-    'LinGaoQiMing': 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/plugin/3pyn7rz4zmzdffp7/?access_token=',
-    'NotOnlyMoney': 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/plugin/s7hzhwn7e1twdisa/?access_token='
+    LinGaoQiMing: 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/plugin/3pyn7rz4zmzdffp7/?access_token=',
+    NotOnlyMoney: 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/plugin/s7hzhwn7e1twdisa/?access_token=',
+    DaGongRen: 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/plugin/xh9khajk8s0xf7um/?access_token='
 };
 
 export const systemMap = {
