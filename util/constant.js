@@ -1,5 +1,5 @@
 // 常量
-export const DEF_MODEL_API = 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie_bot_8k?access_token=';
+export const DEF_MODEL_API = 'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions?access_token=';
 
 // 插件地址-带了知识库私域文本
 export const PLUGIN_API = {
