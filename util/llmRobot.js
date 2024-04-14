@@ -103,14 +103,11 @@ export async function qianfanSdkBot(content = '', appid) {
             // 部署在另外一台机器上面的qianfan sdk
             url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat?${query}`
         };
-        console.log(content, 'qianfanSdkBot', options);
 
         return new Promise((resolve, reject) => {
             try {
                 request(options, (error, response) => {
-                    console.log(error, response);
                     const ret = safeParseJSON(response && response.body || '');
-                    console.log('ret', ret, ret.data);
                     if (ret && ret.data) {
                         resolve({result: ret.data});
                     }
