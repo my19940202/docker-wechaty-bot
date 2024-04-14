@@ -89,8 +89,9 @@ function getAccessToken(type = 'LiuShifu') {
     })
 }
 
-export async function qianfanSdkBot(content) {
+export async function qianfanSdkBot(content = '') {
     if (content) {
+        content = encodeURIComponent(content.trim());
         const options = {
             method: 'GET',
             // 部署在另外一台机器上面的qianfan sdk
