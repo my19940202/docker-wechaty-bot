@@ -88,3 +88,35 @@ function getAccessToken(type = 'LiuShifu') {
         })
     })
 }
+
+
+export async function qianfanSdkBot(content) {
+    if (content) {
+        const options = {
+            method: 'GET',
+            // 部署在另外一台机器上面的qianfan sdk
+            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com/chat?msg=${content}`,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        return new Promise((resolve, reject) => {
+            try {
+                request(options, (error, response) => {
+                    console.log('request', response.body);
+                    if (error) {
+                        reject({result: '业务繁忙，稍后回复'});
+                    }
+                    else {
+                        if (ret && ret.result) {
+                            resolve(safeParseJSON(response.body));
+                        }
+                    }
+                })
+            } catch (error) {
+                reject({result: '业务繁忙，稍后回复'});
+            }
+        })
+    }
+}

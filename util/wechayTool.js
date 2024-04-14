@@ -1,6 +1,6 @@
 
 import {ScanStatus, log} from 'wechaty';
-import {baiduBot} from './llmRobot.js';
+import {baiduBot, qianfanSdkBot} from './llmRobot.js';
 import {badWords} from './constant.js';
 import * as schedule from 'node-schedule';
 
@@ -66,6 +66,7 @@ export async function onMessage (msg) {
             const sdhpPattern = ['不止金钱', '声动'];
             const bankPattern = ['中国银行'];
             const daGongRenPattern = ['包邮区', '互联网', '学习'];
+            const webWokerPattern = ['webwoker', 'WebWoker'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');
@@ -104,6 +105,11 @@ export async function onMessage (msg) {
             }
             else if (bankPattern.some(item => topic.includes(item))) {
                 const {result} = await baiduBot(text, 'ChinaBank');
+                statMap.say = statMap.say + 1;
+                await msg.say(result);
+            }
+            else if (webWokerPattern.some(item => topic.includes(item))) {
+                const {result} = await qianfanSdkBot(text);
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
