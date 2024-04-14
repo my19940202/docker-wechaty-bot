@@ -90,7 +90,6 @@ function getAccessToken(type = 'LiuShifu') {
 }
 
 export async function qianfanSdkBot(content) {
-    console.log('qianfanSdkBot', content);
     if (content) {
         const options = {
             method: 'GET',
@@ -100,12 +99,14 @@ export async function qianfanSdkBot(content) {
                 'Content-Type': 'application/json'
             }
         };
+        console.log(content, 'qianfanSdkBot', options);
 
         return new Promise((resolve, reject) => {
             try {
                 request(options, (error, response) => {
-                    const ret = safeParseJSON(response.body || '');
-                    console.log(error, 'ret', ret, response);
+                    console.log(error, response);
+                    const ret = safeParseJSON(response && response.body || '');
+                    console.log('ret', ret, ret.data);
                     if (ret && ret.data) {
                         resolve({result: ret.data});
                     }
