@@ -95,7 +95,7 @@ export async function qianfanSdkBot(content) {
         const options = {
             method: 'GET',
             // 部署在另外一台机器上面的qianfan sdk
-            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com/chat?msg=${content}`,
+            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat?msg=${content}`,
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -105,7 +105,7 @@ export async function qianfanSdkBot(content) {
             try {
                 request(options, (error, response) => {
                     const ret = safeParseJSON(response.body || '');
-                    console.log('ret', ret);
+                    console.log(error, 'ret', ret, response);
                     if (ret && ret.data) {
                         resolve({result: ret.data});
                     }
