@@ -67,6 +67,7 @@ export async function onMessage (msg) {
             const bankPattern = ['中国银行'];
             const daGongRenPattern = ['包邮区', '互联网', '学习'];
             const webWokerPattern = ['webworker', 'WebWorker'];
+            const qianfanPattern = ['千帆', 'appbuilder'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');
@@ -109,7 +110,12 @@ export async function onMessage (msg) {
                 await msg.say(result);
             }
             else if (webWokerPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text.split(' ')[1]);
+                const {result} = await qianfanSdkBot(text.split(' ')[1], '9b1b1ee5-1092-47e5-a0f0-33490a2fda2b');
+                statMap.say = statMap.say + 1;
+                await msg.say(result);
+            }
+            else if (qianfanPattern.some(item => topic.includes(item))) {
+                const {result} = await qianfanSdkBot(text.split(' ')[1], 'f3aff6e7-9fd6-4d17-939e-d6065a133bf3');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }

@@ -1,6 +1,8 @@
 import request from 'request';
 import {systemMap, PLUGIN_API, DEF_MODEL_API} from './constant.js';
 import {safeParseJSON} from './safeParseJSON.js';
+import * as querystring from 'querystring';
+
 // token存储到env中，避免暴露
 const env = process.env;
 
@@ -89,16 +91,17 @@ function getAccessToken(type = 'LiuShifu') {
     })
 }
 
-export async function qianfanSdkBot(content = '') {
+export async function qianfanSdkBot(content = '', appid) {
     if (content) {
-        content = encodeURIComponent(content.trim());
+        let query = querystring.stringify({
+            appid,
+            msg: encodeURIComponent(content.trim())
+        });
+
         const options = {
             method: 'GET',
             // 部署在另外一台机器上面的qianfan sdk
-            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat?msg=${content}`,
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat?${query}`
         };
         console.log(content, 'qianfanSdkBot', options);
 
