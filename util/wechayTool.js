@@ -66,7 +66,7 @@ export async function onMessage (msg) {
             const sdhpPattern = ['不止金钱', '声动'];
             const bankPattern = ['中国银行'];
             const daGongRenPattern = ['包邮区', '互联网', '学习'];
-            const webWokerPattern = ['webwoker', 'WebWoker'];
+            const webWokerPattern = ['webworker', 'WebWorker'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');

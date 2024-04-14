@@ -89,8 +89,8 @@ function getAccessToken(type = 'LiuShifu') {
     })
 }
 
-
 export async function qianfanSdkBot(content) {
+    console.log('qianfanSdkBot', content);
     if (content) {
         const options = {
             method: 'GET',
@@ -104,14 +104,13 @@ export async function qianfanSdkBot(content) {
         return new Promise((resolve, reject) => {
             try {
                 request(options, (error, response) => {
-                    console.log('request', response.body);
-                    if (error) {
-                        reject({result: '业务繁忙，稍后回复'});
+                    const ret = safeParseJSON(response.body || '');
+                    console.log('ret', ret);
+                    if (ret && ret.data) {
+                        resolve({result: ret.data});
                     }
                     else {
-                        if (ret && ret.result) {
-                            resolve(safeParseJSON(response.body));
-                        }
+                        reject({result: '业务繁忙，稍后回复'});
                     }
                 })
             } catch (error) {
