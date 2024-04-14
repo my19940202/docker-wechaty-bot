@@ -109,7 +109,7 @@ export async function onMessage (msg) {
                 await msg.say(result);
             }
             else if (webWokerPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text);
+                const {result} = await qianfanSdkBot(text.split(' ')[1]);
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
