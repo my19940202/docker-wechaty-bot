@@ -93,15 +93,17 @@ function getAccessToken(type = 'LiuShifu') {
 
 export async function qianfanSdkBot(content = '', appid) {
     if (content) {
-        let query = querystring.stringify({
-            appid,
-            msg: encodeURIComponent(content.trim())
-        });
-
         const options = {
-            method: 'GET',
+            method: 'POST',
             // 部署在另外一台机器上面的qianfan sdk
-            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat?${query}`
+            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat`,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                appid,
+                msg: content.trim()
+            })
         };
 
         return new Promise((resolve, reject) => {
