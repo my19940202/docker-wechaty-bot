@@ -46,7 +46,6 @@ export async function onMessage (msg) {
         statMap.msg = statMap.msg + 1;
     }
     else {
-        await msg.say('小助手暂时不支持回复非文字类信息');
         return;
     }
     const contact = msg.talker();
@@ -64,6 +63,10 @@ export async function onMessage (msg) {
             await msg.say('群人设已经更新');
         }
         else if (await msg.mentionSelf()) {
+            if (!msg.text()) {
+                await msg.say('非文字信息，暂不支持');
+                return;
+            }
             // 临高启明书友群使用带有外挂知识库的机器人
             const novelPattern = ['元老', '临高', '启明', '丰城', '政保局', '田独'];
             const zhuangxiuPattern = ['刘师傅', '作业', '装修', '局改'];
@@ -132,6 +135,10 @@ export async function onMessage (msg) {
     }
     // 单聊使用stat查看目前统计数据
     else {
+        if (!msg.text()) {
+            await msg.say('非文字信息，暂不支持');
+            return;
+        }
         // 设置人设
         if (text.includes('设置人设')) {
             systemMap[name] = text.split('设置人设')[1];
