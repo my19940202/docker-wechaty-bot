@@ -43,10 +43,6 @@ export async function onFriendship (friendship) {
 export async function onMessage (msg) {
     log.info('StarterBot', msg.toString());
     statMap.msg = statMap.msg + 1;
-    if (msg.type() !== this.Message.Type.Text) {
-        await msg.say('非文字类信息，小助手还不知道怎么回复呢');
-        return;
-    }
 
     const contact = msg.talker();
     const text = msg.text();
@@ -63,6 +59,10 @@ export async function onMessage (msg) {
             await msg.say('群人设已经更新');
         }
         else if (await msg.mentionSelf()) {
+            if (msg.type() !== this.Message.Type.Text) {
+                await msg.say('非文字类信息，不知道怎么回复呢');
+                return;
+            }
             // 临高启明书友群使用带有外挂知识库的机器人
             const novelPattern = ['元老', '临高', '启明', '丰城', '政保局', '田独'];
             const zhuangxiuPattern = ['刘师傅', '作业', '装修', '局改'];
@@ -130,6 +130,10 @@ export async function onMessage (msg) {
         }
     }
     else {
+        if (msg.type() !== this.Message.Type.Text) {
+            await msg.say('非文字类信息，不知道怎么回复呢');
+            return;
+        }
         // 设置人设
         if (text.includes('设置人设')) {
             systemMap[name] = text.split('设置人设')[1];
