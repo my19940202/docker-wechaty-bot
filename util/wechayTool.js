@@ -39,15 +39,12 @@ export async function onFriendship (friendship) {
         await friendship.accept();
     }
 }
-async function isTextMessage(msg) {
-    return msg.type() === msg.Type.Text;
-}
-
 
 export async function onMessage (msg) {
     log.info('StarterBot', msg.toString());
-    if (!await isTextMessage(msg)) {
-        await msg.say('非文字信息，暂不支持');
+    statMap.msg = statMap.msg + 1;
+    if (msg.type() !== this.Message.Type.Text) {
+        await msg.say('非文字类信息，小助手还不知道怎么回复呢');
         return;
     }
 
@@ -132,7 +129,6 @@ export async function onMessage (msg) {
             }
         }
     }
-    // 单聊使用stat查看目前统计数据
     else {
         // 设置人设
         if (text.includes('设置人设')) {
