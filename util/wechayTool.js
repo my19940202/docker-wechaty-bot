@@ -39,15 +39,18 @@ export async function onFriendship (friendship) {
         await friendship.accept();
     }
 }
+async function isTextMessage(msg) {
+    return msg.type() === msg.Type.Text;
+}
+
 
 export async function onMessage (msg) {
     log.info('StarterBot', msg.toString());
-    if (msg.text()) {
-        statMap.msg = statMap.msg + 1;
-    }
-    else {
+    if (!await isTextMessage(msg)) {
+        await msg.say('非文字信息，暂不支持');
         return;
     }
+
     const contact = msg.talker();
     const text = msg.text();
     const room = msg.room();
@@ -63,10 +66,6 @@ export async function onMessage (msg) {
             await msg.say('群人设已经更新');
         }
         else if (await msg.mentionSelf()) {
-            if (!msg.text()) {
-                await msg.say('非文字信息，暂不支持');
-                return;
-            }
             // 临高启明书友群使用带有外挂知识库的机器人
             const novelPattern = ['元老', '临高', '启明', '丰城', '政保局', '田独'];
             const zhuangxiuPattern = ['刘师傅', '作业', '装修', '局改'];
@@ -74,7 +73,7 @@ export async function onMessage (msg) {
             const bankPattern = ['中国银行'];
             const daGongRenPattern = ['包邮区', '互联网', '学习'];
             const webWokerPattern = ['webworker', 'WebWorker'];
-            const lqgmPattern = ['秘书', '临高'];
+            const lqgmPattern = ['秘书', '助理'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');
@@ -135,10 +134,6 @@ export async function onMessage (msg) {
     }
     // 单聊使用stat查看目前统计数据
     else {
-        if (!msg.text()) {
-            await msg.say('非文字信息，暂不支持');
-            return;
-        }
         // 设置人设
         if (text.includes('设置人设')) {
             systemMap[name] = text.split('设置人设')[1];
