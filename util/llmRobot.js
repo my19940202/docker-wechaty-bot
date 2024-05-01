@@ -96,7 +96,7 @@ export async function qianfanSdkBot(content = '', appid) {
         const options = {
             method: 'POST',
             // 部署在另外一台机器上面的qianfan sdk
-            url: `http://yvsdetmx.appbuilder.8i7w8y5q.kge32tjp.com:8800/chat`,
+            url: `http://yvsdetmx.qianfan-appbuilder.8i7w8y5q.kge32tjp.com/chat`,
             headers: {
                 'Content-Type': 'application/json'
             },
