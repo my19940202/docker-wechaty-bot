@@ -70,7 +70,8 @@ export async function onMessage (msg) {
             const bankPattern = ['中国银行'];
             const daGongRenPattern = ['包邮区', '互联网', '学习'];
             const webWokerPattern = ['webworker', 'WebWorker'];
-            const lqgmPattern = ['秘书', '助理'];
+            const wikiPattern = ['灰机', 'wiki'];
+            const originPattern = ['原文'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');
@@ -117,8 +118,13 @@ export async function onMessage (msg) {
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
-            else if (lqgmPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text.split(' ')[1], 'f3aff6e7-9fd6-4d17-939e-d6065a133bf3');
+            else if (wikiPattern.some(item => topic.includes(item))) {
+                const {result} = await qianfanSdkBot(text.split(' ')[1], 'a8b83c8e-5abe-4d56-a44e-7d5610e8a04b');
+                statMap.say = statMap.say + 1;
+                await msg.say(result);
+            }
+            else if (originPattern.some(item => topic.includes(item))) {
+                const {result} = await qianfanSdkBot(text.split(' ')[1], 'c5af8a7d-c296-4899-99e2-f9cf5efe664c');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
