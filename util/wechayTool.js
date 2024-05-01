@@ -114,17 +114,17 @@ export async function onMessage (msg) {
             //     await msg.say(result);
             // }
             else if (webWokerPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text.split(' ')[1], '9b1b1ee5-1092-47e5-a0f0-33490a2fda2b');
+                const {result} = await qianfanSdkBot(text, '9b1b1ee5-1092-47e5-a0f0-33490a2fda2b');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else if (wikiPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text.split(' ')[1], 'a8b83c8e-5abe-4d56-a44e-7d5610e8a04b');
+                const {result} = await qianfanSdkBot(text, '98c906d4-a308-4f10-8c5c-cc7feb000803');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else if (originPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text.split(' ')[1], 'c5af8a7d-c296-4899-99e2-f9cf5efe664c');
+                const {result} = await qianfanSdkBot(text, 'f3aff6e7-9fd6-4d17-939e-d6065a133bf3');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }

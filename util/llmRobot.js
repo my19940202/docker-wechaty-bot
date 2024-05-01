@@ -92,11 +92,13 @@ function getAccessToken(type = 'LiuShifu') {
 }
 
 export async function qianfanSdkBot(content = '', appid) {
+    content = content.replace('@小助手', '');
+
     if (content) {
         const options = {
             method: 'POST',
-            // 部署在另外一台机器上面的qianfan sdk
-            url: `http://yvsdetmx.qianfan-appbuilder.8i7w8y5q.kge32tjp.com:8800/chat`,
+            // 另外部署 qianfan sdk
+            url: 'http://qianfan-appbuilder-70138-4-1319072486.sh.run.tcloudbase.com/chat',
             headers: {
                 'Content-Type': 'application/json'
             },
