@@ -72,6 +72,7 @@ export async function onMessage (msg) {
             const webWokerPattern = ['webworker', 'WebWorker'];
             const wikiPattern = ['灰机', 'wiki'];
             const originPattern = ['原文'];
+            const fzxxzPattern = ['凡人', '修仙传'];
 
             if (badWords.some(item => text.includes(item))) {
                 await msg.say('敏感信息，小助手暂不回答');
@@ -125,6 +126,11 @@ export async function onMessage (msg) {
             }
             else if (originPattern.some(item => topic.includes(item))) {
                 const {result} = await qianfanSdkBot(text, 'f3aff6e7-9fd6-4d17-939e-d6065a133bf3');
+                statMap.say = statMap.say + 1;
+                await msg.say(result);
+            }
+            else if (fzxxzPattern.some(item => topic.includes(item))) {
+                const {result} = await qianfanSdkBot(text, 'c948cbfb-7279-4731-8866-356b1e8c0eea');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
