@@ -147,12 +147,13 @@ export async function onMessage (msg) {
             return;
         }
         // 设置人设
-        if (text.includes('设置人设')) {
-            systemMap[name] = text.split('设置人设')[1];
-            await sleep(1000);
-            await msg.say('人设已经更新');
-        }
-        else if (msg.text() === 'stat') {
+        // if (text.includes('设置人设')) {
+        //     systemMap[name] = text.split('设置人设')[1];
+        //     await sleep(1000);
+        //     await msg.say('人设已经更新');
+        // }
+        // else
+        if (msg.text() === 'stat') {
             await sleep(1000);
             await msg.say(`已收消息${statMap.msg}条，回复${statMap.say}次, 人设${JSON.stringify(systemMap)}`)
         }

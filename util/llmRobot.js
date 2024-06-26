@@ -21,7 +21,8 @@ export async function baiduBot(content, robotType, systemFromChat) {
                 messages: [{role: 'user', content}],
                 system: systemFromChat || systemMap[robotType] || undefined,
                 disable_search: false,
-                enable_citation: false
+                enable_citation: false,
+                max_output_tokens: 400
             };
 
         const options = {
