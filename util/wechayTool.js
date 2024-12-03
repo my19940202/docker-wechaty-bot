@@ -1,10 +1,10 @@
 
-import {ScanStatus, log} from 'wechaty';
-import {baiduBot, qianfanSdkBot} from './llmRobot.js';
-import {badWords} from './constant.js';
+import { ScanStatus, log } from 'wechaty';
+import { baiduBot, qianfanSdkBot } from './llmRobot.js';
+import { badWords } from './constant.js';
 import * as schedule from 'node-schedule';
 
-const statMap = {room: 0, say: 0, msg: 0};
+const statMap = { room: 0, say: 0, msg: 0 };
 // 人设map
 const systemMap = {};
 
@@ -16,7 +16,7 @@ function sleep(ms) {
 
 let lastAnswer = 0;
 
-export function onScan (qrcode, status) {
+export function onScan(qrcode, status) {
     if (status === ScanStatus.Waiting || status === ScanStatus.Timeout) {
         const qrcodeImageUrl = ['https://wechaty.js.org/qrcode/', encodeURIComponent(qrcode)].join('');
         log.info('StarterBot', 'onScan: %s(%s) - %s', ScanStatus[status], status, qrcodeImageUrl);
@@ -25,22 +25,22 @@ export function onScan (qrcode, status) {
     }
 }
 
-export function onLogin (user) {
+export function onLogin(user) {
     log.info('StarterBot', '%s login', user)
 }
 
-export function onLogout (user) {
+export function onLogout(user) {
     log.info('StarterBot', '%s logout', user)
 }
 
-export async function onFriendship (friendship) {
+export async function onFriendship(friendship) {
     log.info('this.Friendship', this.Friendship);
     if (friendship.type() === this.Friendship.Type.Receive) {
         await friendship.accept();
     }
 }
 
-export async function onMessage (msg) {
+export async function onMessage(msg) {
     log.info('StarterBot', msg.toString());
     statMap.msg = statMap.msg + 1;
 
@@ -83,29 +83,34 @@ export async function onMessage (msg) {
                     await msg.say('问太快了，请稍后再问');
                 }
                 else {
-                    const {result} = await baiduBot(text, 'LinGaoQiMing');
+                    const { result } = await baiduBot(text, 'LinGaoQiMing');
                     statMap.say = statMap.say + 1;
                     await msg.say(result);
                     lastAnswer = +new Date();
                 }
             }
             else if (zhuangxiuPattern.some(item => topic.includes(item))) {
-                let {result} = await baiduBot(text, 'LiuShifu');
-                if (result) {
-                    if (result && result.includes('百度')) {
-                        result = result.replace(/百度/g, '刘师傅');
+                if (text.includes('发霉') && text.includes('唐城')) {
+                    await msg.say('根据小红书信息，目前已有部分业主反馈发霉相关事件，我相信我们刘师傅团队已经在进行决策制定了。');
+                }
+                else {
+                    let { result } = await baiduBot(text, 'LiuShifu');
+                    if (result) {
+                        if (result && result.includes('百度')) {
+                            result = result.replace(/百度/g, '刘师傅');
+                        }
+                        statMap.say = statMap.say + 1;
+                        await msg.say(result);
                     }
-                    statMap.say = statMap.say + 1;
-                    await msg.say(result);
                 }
             }
             else if (daGongRenPattern.some(item => topic.includes(item))) {
-                const {result} = await baiduBot(text, 'DaGongRen');
+                const { result } = await baiduBot(text, 'DaGongRen');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else if (sdhpPattern.some(item => topic.includes(item))) {
-                const {result} = await baiduBot(text, 'NotOnlyMoney');
+                const { result } = await baiduBot(text, 'NotOnlyMoney');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
@@ -115,27 +120,27 @@ export async function onMessage (msg) {
             //     await msg.say(result);
             // }
             else if (webWokerPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text, '9b1b1ee5-1092-47e5-a0f0-33490a2fda2b');
+                const { result } = await qianfanSdkBot(text, '9b1b1ee5-1092-47e5-a0f0-33490a2fda2b');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else if (wikiPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text, '98c906d4-a308-4f10-8c5c-cc7feb000803');
+                const { result } = await qianfanSdkBot(text, '98c906d4-a308-4f10-8c5c-cc7feb000803');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else if (originPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text, 'f3aff6e7-9fd6-4d17-939e-d6065a133bf3');
+                const { result } = await qianfanSdkBot(text, 'f3aff6e7-9fd6-4d17-939e-d6065a133bf3');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else if (fzxxzPattern.some(item => topic.includes(item))) {
-                const {result} = await qianfanSdkBot(text, 'c948cbfb-7279-4731-8866-356b1e8c0eea');
+                const { result } = await qianfanSdkBot(text, 'c948cbfb-7279-4731-8866-356b1e8c0eea');
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
             else {
-                const {result} = await baiduBot(text, '', systemMap[topic]);
+                const { result } = await baiduBot(text, '', systemMap[topic]);
                 statMap.say = statMap.say + 1;
                 await msg.say(result);
             }
@@ -158,7 +163,7 @@ export async function onMessage (msg) {
             await msg.say(`已收消息${statMap.msg}条，回复${statMap.say}次, 人设${JSON.stringify(systemMap)}`)
         }
         else if (!name.includes('微信')) {
-            const {result} = await baiduBot(text, '', systemMap[name]);
+            const { result } = await baiduBot(text, '', systemMap[name]);
             statMap.say = statMap.say + 1;
             await msg.say(result);
         }
